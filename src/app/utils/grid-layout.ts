@@ -419,8 +419,8 @@ export function createBirthdayLabel(age: number, year: number, compactMode: bool
 /**
  * Create birthday tooltip matching Gina's format
  */
-export function createBirthdayTooltip(date: string, age: number): string {
-  const formattedDate = formatTooltipDateLocal(date, true)
+export function createBirthdayTooltip(date: string, age: number, showFullDate: boolean = false): string {
+  const formattedDate = formatTooltipDateLocal(date, showFullDate)
   const yearText = age === 1 ? "year" : "years"
   return `${formattedDate} – Turned ${age} ${yearText} old`
 }

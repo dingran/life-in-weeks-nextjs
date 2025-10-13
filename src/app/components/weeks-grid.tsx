@@ -155,7 +155,7 @@ export const WeeksGrid = forwardRef<HTMLDivElement, WeeksGridProps>(
         type: 'birthday',
         label: createBirthdayLabel(age, year, isCompactMode),
         date: birthdayDateStr,
-        tooltip: createBirthdayTooltip(birthdayDateStr, age),
+        tooltip: createBirthdayTooltip(birthdayDateStr, age, APP_CONFIG.showPersonalEventDates),
         borderClass: 'btn',
         backgroundClass: 'custom-color', // We'll apply inline styles
         age,
@@ -165,8 +165,12 @@ export const WeeksGrid = forwardRef<HTMLDivElement, WeeksGridProps>(
       allBoxes.push(birthdayBox)
     }
     
-    // Process all 53 weeks in the year (0-52)
-    for (let week = 0; week <= 52; week++) {
+    // For age 0, start from week 0. For age > 0, start from week 1 to avoid
+    // duplicating the week that contains the birthday (already in previous year)
+    const startWeek = age === 0 ? 0 : 1
+    
+    // Process all weeks in the year
+    for (let week = startWeek; week <= 52; week++) {
       let weekDate: Date
       
       if (age === 0) {
